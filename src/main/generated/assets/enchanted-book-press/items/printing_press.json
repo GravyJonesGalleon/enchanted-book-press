@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "enchanted-book-press:block/printing_press"
+  }
+}

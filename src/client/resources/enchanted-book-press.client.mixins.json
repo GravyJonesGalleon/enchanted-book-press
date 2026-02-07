@@ -1,9 +1,9 @@
 {
 	"required": true,
-	"package": "gravy.enchantedpress.mixin.client",
+	"package": "dev.gravy.enchantedpress.mixin.client",
 	"compatibilityLevel": "JAVA_21",
 	"client": [
-		"dev.gravy.enchantedpress.mixin.client.ExampleClientMixin"
+		"ExampleClientMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
