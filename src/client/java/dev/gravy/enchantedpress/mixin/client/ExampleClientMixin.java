@@ -1,4 +1,4 @@
-package gravy.enchantedpress.mixin.client;
+package dev.gravy.enchantedpress.mixin.client;
 
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;

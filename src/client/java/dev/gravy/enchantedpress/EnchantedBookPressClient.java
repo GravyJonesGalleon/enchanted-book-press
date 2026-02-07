@@ -1,4 +1,4 @@
-package gravy.enchantedpress;
+package dev.gravy.enchantedpress;
 
 import net.fabricmc.api.ClientModInitializer;
 

@@ -3,7 +3,7 @@
 	"package": "gravy.enchantedpress.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"ExampleMixin"
+		"dev.gravy.enchantedpress.mixin.ExampleMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

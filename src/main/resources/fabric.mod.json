@@ -16,13 +16,13 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"gravy.enchantedpress.EnchantedBookPress"
+			"dev.gravy.enchantedpress.EnchantedBookPress"
 		],
 		"client": [
-			"gravy.enchantedpress.EnchantedBookPressClient"
+			"dev.gravy.enchantedpress.EnchantedBookPressClient"
 		],
 		"fabric-datagen": [
-			"gravy.enchantedpress.EnchantedBookPressDataGenerator"
+			"dev.gravy.enchantedpress.EnchantedBookPressDataGenerator"
 		]
 	},
 	"mixins": [
