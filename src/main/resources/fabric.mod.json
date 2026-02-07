@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "enchanted-book-press",
+	"version": "${version}",
+	"name": "Enchanted Book Press",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/enchanted-book-press/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"gravy.enchantedpress.EnchantedBookPress"
+		],
+		"client": [
+			"gravy.enchantedpress.EnchantedBookPressClient"
+		],
+		"fabric-datagen": [
+			"gravy.enchantedpress.EnchantedBookPressDataGenerator"
+		]
+	},
+	"mixins": [
+		"enchanted-book-press.mixins.json",
+		{
+			"config": "enchanted-book-press.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.18.4",
+		"minecraft": "~1.21.11",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
