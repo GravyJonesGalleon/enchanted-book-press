@@ -1,5 +1,6 @@
 package dev.gravy.enchantedpress;
 
+import dev.gravy.enchantedpress.block.PrintingPressBlock;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -23,7 +24,7 @@ import java.util.function.Function;
 public class ModBlocks {
     public static final Block PRINTING_PRESS = register(
             "printing_press",
-            Block::new,
+            PrintingPressBlock::new,
             BlockBehaviour.Properties.of()
                     .mapColor(MapColor.WOOD)
                     .instrument(NoteBlockInstrument.BASS)

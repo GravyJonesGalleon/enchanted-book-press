@@ -21,5 +21,7 @@ public class EnchantedBookPress implements ModInitializer {
 
 		LOGGER.info("This is EnchantedBlockPress, saying \"Hello Fabric world!\"");
 		ModBlocks.initialize();
+		ModStats.initialize();
+		ModMenus.initialize();
 	}
 }
