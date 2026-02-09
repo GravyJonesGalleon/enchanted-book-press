@@ -2,6 +2,7 @@ package dev.gravy.enchantedpress;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.minecraft.world.item.crafting.RecipeManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,5 +24,8 @@ public class EnchantedBookPress implements ModInitializer {
 		ModBlocks.initialize();
 		ModStats.initialize();
 		ModMenus.initialize();
+		ModRecipeTypes.initialize();
+		ModRecipeBookCategories.initialize();
+		ModRecipeSerializers.initialize();
 	}
 }

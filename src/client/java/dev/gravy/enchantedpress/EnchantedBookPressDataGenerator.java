@@ -1,9 +1,6 @@
 package dev.gravy.enchantedpress;
 
-import dev.gravy.enchantedpress.data.provider.EnchantedBookPressBlockLootTableProvider;
-import dev.gravy.enchantedpress.data.provider.EnchantedBookPressBlockTagProvider;
-import dev.gravy.enchantedpress.data.provider.EnchantedBookPressEnUSLangProvider;
-import dev.gravy.enchantedpress.data.provider.EnchantedBookPressModelProvider;
+import dev.gravy.enchantedpress.data.provider.*;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 
@@ -15,5 +12,6 @@ public class EnchantedBookPressDataGenerator implements DataGeneratorEntrypoint 
 		pack.addProvider(EnchantedBookPressEnUSLangProvider::new);
 		pack.addProvider(EnchantedBookPressBlockLootTableProvider::new);
 		pack.addProvider(EnchantedBookPressBlockTagProvider::new);
+		pack.addProvider(EnchantedBookPressRecipeProvider::new);
 	}
 }
