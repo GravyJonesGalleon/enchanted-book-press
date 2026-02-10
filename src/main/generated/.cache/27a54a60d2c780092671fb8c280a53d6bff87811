@@ -1,2 +1,3 @@
 // 1.21.11	-999999999-01-01T00:00:00	Enchanted Book Press/EnchantedBookPressRecipeProvider
-1f01cd7cb0a06cbbeca81d98723f9c8c629242f9 data/enchanted-book-press/recipe/base_recipe.json
+48687c84b862c8f690603c532fc9c51848b93b1d data/enchanted-book-press/advancement/recipes/building_blocks/printing_press.json
+75b7e5a01138ddd96617af6fc4514a704b6411ba data/enchanted-book-press/recipe/printing_press.json

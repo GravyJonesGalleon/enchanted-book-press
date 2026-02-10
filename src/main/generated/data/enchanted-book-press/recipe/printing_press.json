@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "F": "minecraft:feather",
+    "I": "minecraft:ink_sac",
+    "W": "#minecraft:planks"
+  },
+  "pattern": [
+    "IF",
+    "WW",
+    "WW"
+  ],
+  "result": {
+    "count": 1,
+    "id": "enchanted-book-press:printing_press"
+  }
+}

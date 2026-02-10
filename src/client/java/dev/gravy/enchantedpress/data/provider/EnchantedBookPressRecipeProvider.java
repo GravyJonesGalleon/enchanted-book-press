@@ -1,17 +1,17 @@
 package dev.gravy.enchantedpress.data.provider;
 
-import dev.gravy.enchantedpress.EnchantedBookPress;
-import dev.gravy.enchantedpress.data.builder.PrintingRecipeBuilder;
+import dev.gravy.enchantedpress.ModBlocks;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.fabricmc.fabric.api.datagen.v1.recipe.FabricRecipeExporter;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.resources.Identifier;
-import net.minecraft.resources.ResourceKey;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -25,13 +25,18 @@ public class EnchantedBookPressRecipeProvider extends FabricRecipeProvider {
         return new RecipeProvider(provider, recipeOutput) {
             @Override
             public void buildRecipes() {
-                PrintingRecipeBuilder.create(
-                        Ingredient.of(Items.ENCHANTED_BOOK),
-                        Ingredient.of(Items.BOOK),
-                        Ingredient.of(Items.LAPIS_LAZULI),
-                        Items.ENCHANTED_BOOK.getDefaultInstance()
-                ).offerTo(recipeOutput, ResourceKey.createRegistryKey(Identifier.fromNamespaceAndPath(EnchantedBookPress.MOD_ID, "base_recipe")));
-            }
+                HolderLookup.RegistryLookup<Item> itemLookup = registries.lookupOrThrow(Registries.ITEM);
+
+                ShapedRecipeBuilder.shaped(itemLookup, RecipeCategory.BUILDING_BLOCKS, ModBlocks.PRINTING_PRESS)
+                        .pattern("IF")
+                        .pattern("WW")
+                        .pattern("WW")
+                        .define('I', Items.INK_SAC)
+                        .define('F', Items.FEATHER)
+                        .define('W', ItemTags.PLANKS)
+                        .unlockedBy(getHasName(Items.INK_SAC), has(Items.INK_SAC))
+                        .save(recipeOutput);
+                }
         };
     }
 

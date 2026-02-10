@@ -9,6 +9,6 @@ public class EnchantedBookPressClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		// This entrypoint is suitable for setting up client-specific logic, such as rendering.
 		EnchantedBookPress.LOGGER.info("This is the client, saying hi!");
-		MenuScreens.register(ModMenus.PRINTING_PRESS_MENU, PrintingPressScreen::new);
+		MenuScreens.register(ModMenuTypes.PRINTING_PRESS, PrintingPressScreen::new);
 	}
 }

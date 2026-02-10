@@ -10,8 +10,8 @@ import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 
-public class ModMenus {
-    public static final MenuType PRINTING_PRESS_MENU = register(
+public class ModMenuTypes {
+    public static final MenuType PRINTING_PRESS = register(
             "printing_press_menu",
             new MenuType<>(PrintingPressMenu::new, FeatureFlagSet.of())
     );
