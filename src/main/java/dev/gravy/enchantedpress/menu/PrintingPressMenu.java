@@ -189,11 +189,7 @@ public class PrintingPressMenu extends AbstractContainerMenu {
 
             if (slotId == RESULT_SLOT) {
                 // Taking from the output
-                if (!this.moveItemStackTo(stackToMove, INVENTORY_START, HOTBAR_END, true)){
-                    return ItemStack.EMPTY;
-                }
-
-
+                clearContainer(player, resultSlots);
                 slot.onQuickCraft(stackToMove, stackToRemain);
             } else if (slotId != ENCHANTED_BOOK_SLOT
                     && slotId != BOOK_SLOT
