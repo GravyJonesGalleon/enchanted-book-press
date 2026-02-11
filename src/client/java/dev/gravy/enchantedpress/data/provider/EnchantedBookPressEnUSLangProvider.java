@@ -2,7 +2,9 @@ package dev.gravy.enchantedpress.data.provider;
 
 import dev.gravy.enchantedpress.EnchantedBookPress;
 import dev.gravy.enchantedpress.ModBlocks;
+import dev.gravy.enchantedpress.ModStats;
 import dev.gravy.enchantedpress.block.PrintingPressBlock;
+import dev.gravy.enchantedpress.screen.PrintingPressScreen;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.core.HolderLookup;
@@ -28,6 +30,8 @@ public class EnchantedBookPressEnUSLangProvider extends FabricLanguageProvider {
     @Override
     public void generateTranslations(HolderLookup.Provider provider, TranslationBuilder translationBuilder) {
         translationBuilder.add(ModBlocks.PRINTING_PRESS, "Printing Press");
+        translationBuilder.add(ModStats.INTERACT_WITH_PRINTING_PRESS, "Interact with Printing Press");
         addText(translationBuilder, PrintingPressBlock.CONTAINER_TITLE, "Printing Press");
+        addText(translationBuilder, PrintingPressScreen.COST_LABEL_TEXT, "Printing Cost: %1$s");
     }
 }

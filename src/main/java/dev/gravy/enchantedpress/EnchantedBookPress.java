@@ -19,7 +19,7 @@ public class EnchantedBookPress implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 
-		LOGGER.info("This is EnchantedBlockPress, saying \"Hello Fabric world!\"");
+		LOGGER.info("Hi Jacob :)");
 		ModBlocks.initialize();
 		ModStats.initialize();
 		ModMenuTypes.initialize();

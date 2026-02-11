@@ -1,6 +1,7 @@
 package dev.gravy.enchantedpress.menu;
 
 import dev.gravy.enchantedpress.*;
+import net.minecraft.core.Holder;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
@@ -10,6 +11,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
@@ -45,6 +49,7 @@ public class PrintingPressMenu extends AbstractContainerMenu {
             super.setChanged();
         }
     };
+    private final DataSlot cost = DataSlot.standalone();
 
     public PrintingPressMenu(int syncId, Inventory playerInventory) {
         this(syncId, playerInventory, ContainerLevelAccess.NULL);
@@ -62,25 +67,25 @@ public class PrintingPressMenu extends AbstractContainerMenu {
         this.level = level;
         this.access = containerLevelAccess;
 
-        this.addSlot(new Slot(this.inputSlots, ENCHANTED_BOOK_SLOT, 8, 48) {
+        this.addSlot(new Slot(this.inputSlots, ENCHANTED_BOOK_SLOT, 15, 15) {
             @Override
             public boolean mayPlace(ItemStack itemStack) {
                 return itemStack.is(Items.ENCHANTED_BOOK);
             }
         });
-  this.addSlot(new Slot(this.inputSlots, BOOK_SLOT, 26, 48) {
+  this.addSlot(new Slot(this.inputSlots, BOOK_SLOT, 15, 33) {
             @Override
             public boolean mayPlace(ItemStack itemStack) {
                 return itemStack.is(Items.BOOK);
             }
         });
-  this.addSlot(new Slot(this.inputSlots, MATERIAL_SLOT, 44, 48) {
+  this.addSlot(new Slot(this.inputSlots, MATERIAL_SLOT, 15, 51) {
             @Override
             public boolean mayPlace(ItemStack itemStack) {
                 return itemStack.is(Items.LAPIS_LAZULI);
             }
         });
-        this.addSlot(new Slot(this.resultSlots, 2, 145, 39) {
+        this.addSlot(new Slot(this.resultSlots, RESULT_SLOT, 145, 39) {
             @Override
             public boolean mayPlace(ItemStack itemStack) {
                 return false;
@@ -88,18 +93,24 @@ public class PrintingPressMenu extends AbstractContainerMenu {
 
             @Override
             public void onTake(Player player, ItemStack itemStack) {
+                if (!player.hasInfiniteMaterials()) {
+                    player.giveExperienceLevels(-PrintingPressMenu.this.cost.get());
+                }
+
+                PrintingPressMenu.this.cost.set(0);
                 PrintingPressMenu.this.resultSlots.awardUsedRecipes(player, PrintingPressMenu.this.getRelevantItems());
-                PrintingPressMenu.this.shrinkStackInSlot(ENCHANTED_BOOK_SLOT);
-                PrintingPressMenu.this.shrinkStackInSlot(BOOK_SLOT);
-                PrintingPressMenu.this.shrinkStackInSlot(MATERIAL_SLOT);
+                PrintingPressMenu.this.shrinkStackInSlot(ENCHANTED_BOOK_SLOT, 1);
+                PrintingPressMenu.this.shrinkStackInSlot(BOOK_SLOT, 1);
+                PrintingPressMenu.this.shrinkStackInSlot(MATERIAL_SLOT, 16);
                 // TODO: Implement a custom sound?
-                access.execute((level, blockPos) -> {
-                    long l = level.getGameTime();
-                    if (PrintingPressMenu.this.lastSoundTime != l) {
-                        level.playSound(null, blockPos, SoundEvents.UI_CARTOGRAPHY_TABLE_TAKE_RESULT, SoundSource.BLOCKS, 1.0F, 1.0F);
-                        PrintingPressMenu.this.lastSoundTime = l;
-                    }});
                 super.onTake(player, itemStack);
+            }
+
+            @Override
+            public boolean mayPickup(Player player) {
+                return (player.hasInfiniteMaterials()
+                        || player.experienceLevel >= PrintingPressMenu.this.cost.get())
+                        && PrintingPressMenu.this.cost.get() > 0;
             }
         });
 
@@ -114,10 +125,10 @@ public class PrintingPressMenu extends AbstractContainerMenu {
         );
     }
 
-    private void shrinkStackInSlot(int slotIndex) {
+    private void shrinkStackInSlot(int slotIndex, int amount) {
         ItemStack itemStack = this.inputSlots.getItem(slotIndex);
-        if(!itemStack.isEmpty()) {
-            itemStack.shrink(1);
+        if(itemStack.getCount() >= amount) {
+            itemStack.shrink(amount);
             this.inputSlots.setItem(slotIndex, itemStack);
         }
     }
@@ -149,8 +160,15 @@ public class PrintingPressMenu extends AbstractContainerMenu {
             return;
         }
 
-        //ItemEnchantments enchantments = EnchantmentHelper.getEnchantmentsForCrafting(enchantedBook);
+        // Get the total number of levels on the input enchanted book
+        ItemEnchantments enchantments = EnchantmentHelper.getEnchantmentsForCrafting(enchantedBook);
+        int numEnchantmentLevels = 0;
+        for (Holder<Enchantment> enchantment : enchantments.keySet()) {
+            numEnchantmentLevels += enchantments.getLevel(enchantment);
+        }
+
         ItemStack result = enchantedBook.copyWithCount(2);
+        this.cost.set(numEnchantmentLevels);
         this.resultSlots.setItem(RESULT_SLOT, result);
         this.broadcastChanges();
     }
@@ -224,5 +242,9 @@ public class PrintingPressMenu extends AbstractContainerMenu {
         super.removed(player);
         this.resultSlots.removeItemNoUpdate(RESULT_SLOT);
         this.clearContainer(player, this.inputSlots);
+    }
+
+    public int getCost() {
+        return this.cost.get();
     }
 }

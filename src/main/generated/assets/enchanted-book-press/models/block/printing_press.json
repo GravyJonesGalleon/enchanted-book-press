@@ -2,11 +2,11 @@
   "parent": "minecraft:block/cube",
   "textures": {
     "down": "minecraft:block/spruce_planks",
-    "east": "enchanted-book-press:block/printing_press_side1",
-    "north": "minecraft:block/spruce_planks",
+    "east": "enchanted-book-press:block/printing_press_side2",
+    "north": "enchanted-book-press:block/printing_press_side4",
     "particle": "minecraft:block/spruce_planks",
-    "south": "minecraft:block/spruce_planks",
+    "south": "enchanted-book-press:block/printing_press_side1",
     "up": "enchanted-book-press:block/printing_press_top",
-    "west": "minecraft:block/spruce_planks"
+    "west": "enchanted-book-press:block/printing_press_side3"
   }
 }
