@@ -24,6 +24,8 @@ public class PrintingPressScreen extends AbstractContainerScreen<PrintingPressMe
     public PrintingPressScreen(PrintingPressMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
         this.player = playerInventory.player;
+        this.titleLabelX = 36;
+        this.titleLabelY = 14;
     }
 
     @Override

@@ -1,6 +1,6 @@
 {
-  "block.enchanted-book-press.printing_press": "Printing Press",
-  "container.enchanted-book-press.printing_press": "Printing Press",
-  "container.enchanted-book-press.printing_press.cost_label_text": "Printing Cost: %1$s",
-  "enchanted-book-press.interact_with_printing_press": "Interact with Printing Press"
+  "block.enchanted-book-press.printing_press": "Copying Table",
+  "container.enchanted-book-press.printing_press": "Copy Enchanted Book",
+  "container.enchanted-book-press.printing_press.cost_label_text": "Copying Cost: %1$s",
+  "enchanted-book-press.interact_with_printing_press": "Interact with Copying Table"
 }

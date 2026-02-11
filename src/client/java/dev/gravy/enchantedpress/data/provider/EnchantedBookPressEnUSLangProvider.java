@@ -29,9 +29,9 @@ public class EnchantedBookPressEnUSLangProvider extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(HolderLookup.Provider provider, TranslationBuilder translationBuilder) {
-        translationBuilder.add(ModBlocks.PRINTING_PRESS, "Printing Press");
-        translationBuilder.add(ModStats.INTERACT_WITH_PRINTING_PRESS, "Interact with Printing Press");
-        addText(translationBuilder, PrintingPressBlock.CONTAINER_TITLE, "Printing Press");
-        addText(translationBuilder, PrintingPressScreen.COST_LABEL_TEXT, "Printing Cost: %1$s");
+        translationBuilder.add(ModBlocks.PRINTING_PRESS, "Copying Table");
+        translationBuilder.add(ModStats.INTERACT_WITH_PRINTING_PRESS, "Interact with Copying Table");
+        addText(translationBuilder, PrintingPressBlock.CONTAINER_TITLE, "Copy Enchanted Book");
+        addText(translationBuilder, PrintingPressScreen.COST_LABEL_TEXT, "Copying Cost: %1$s");
     }
 }
