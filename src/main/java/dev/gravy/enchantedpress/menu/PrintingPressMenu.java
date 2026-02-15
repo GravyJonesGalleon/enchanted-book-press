@@ -29,7 +29,7 @@ public class PrintingPressMenu extends AbstractContainerMenu {
     public static final int MATERIAL_SLOT = 2;
     public static final int RESULT_SLOT = 3;
     public static final int INVENTORY_START = RESULT_SLOT+1;
-    public static final int INVENTORY_END = RESULT_SLOT+27;
+    public static final int INVENTORY_END = RESULT_SLOT+27+1;
     public static final int HOTBAR_START = INVENTORY_END;
     public static final int HOTBAR_END = INVENTORY_END+9;
     private final ContainerLevelAccess access;
@@ -145,7 +145,7 @@ public class PrintingPressMenu extends AbstractContainerMenu {
         ItemStack material = this.inputSlots.getItem(MATERIAL_SLOT);
         ItemStack result = this.resultSlots.getItem(RESULT_SLOT);
 
-        if (!enchantedBook.isEmpty() && !book.isEmpty() && !material.isEmpty()) {
+        if (!enchantedBook.isEmpty() && !book.isEmpty() && (material.getCount() >= 16)) {
             this.setupResultSlot(enchantedBook, book, material);
         } else if (!result.isEmpty() ){
             this.resultSlots.removeItemNoUpdate(RESULT_SLOT);
@@ -189,7 +189,12 @@ public class PrintingPressMenu extends AbstractContainerMenu {
 
             if (slotId == RESULT_SLOT) {
                 // Taking from the output
-                clearContainer(player, resultSlots);
+                if(!moveItemStackTo(stackToMove, INVENTORY_START, HOTBAR_END, true)){
+                    return ItemStack.EMPTY;
+                }
+                if(!moveItemStackTo(stackToMove, INVENTORY_START, HOTBAR_END, true)){
+                    player.getInventory().placeItemBackInInventory(stackToMove);
+                }
                 slot.onQuickCraft(stackToMove, stackToRemain);
             } else if (slotId != ENCHANTED_BOOK_SLOT
                     && slotId != BOOK_SLOT
