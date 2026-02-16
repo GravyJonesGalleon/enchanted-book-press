@@ -17,11 +17,10 @@ import org.jspecify.annotations.NonNull;
 import java.util.List;
 
 public class PrintingPressMenu extends AbstractContainerMenu {
-    /* PLEASE NOTE:
-    Code has been adapted from https://wiki.fabricmc.net. They are still using the Yarn mappings,
-    so some comments describe the wrong Class and method names, and some have been adjusted by me
-     */
-
+    /*
+    * Slot Definitions
+    * Changing these values will change functionality of the GUI
+    */
     public static final int ENCHANTED_BOOK_SLOT = 0;
     public static final int BOOK_SLOT = 1;
     public static final int MATERIAL_SLOT = 2;
@@ -30,6 +29,18 @@ public class PrintingPressMenu extends AbstractContainerMenu {
     public static final int INVENTORY_END = RESULT_SLOT+27+1;
     public static final int HOTBAR_START = INVENTORY_END;
     public static final int HOTBAR_END = INVENTORY_END+9;
+
+    /*
+    * Balance
+    * Requirements state how many of an ingredient is required, some items are non-stackable so can't be above 1
+    * Level cost for copying is defined LEVEL_COST_COEFFICIENT * <number of enchantments to copy> + LEVEL_COST_OFFSET
+    */
+    public static final int ENCHANTED_BOOK_REQUIREMENT = 1; // Non-stackable
+    public static final int BOOK_REQUIREMENT = 1;
+    public static final int MATERIAL_REQUIREMENT = 16;
+    public static final int LEVEL_COST_COEFFICIENT = 2;
+    public static final int LEVEL_COST_OFFSET = 2;
+
     private final ContainerLevelAccess access;
     long lastSoundTime;
     public final Container inputSlots = new SimpleContainer(3) {
@@ -91,9 +102,9 @@ public class PrintingPressMenu extends AbstractContainerMenu {
 
                 PrintingPressMenu.this.cost.set(0);
                 PrintingPressMenu.this.resultSlots.awardUsedRecipes(player, PrintingPressMenu.this.getRelevantItems());
-                PrintingPressMenu.this.shrinkStackInSlot(ENCHANTED_BOOK_SLOT, 1);
-                PrintingPressMenu.this.shrinkStackInSlot(BOOK_SLOT, 1);
-                PrintingPressMenu.this.shrinkStackInSlot(MATERIAL_SLOT, 16);
+                PrintingPressMenu.this.shrinkStackInSlot(ENCHANTED_BOOK_SLOT, ENCHANTED_BOOK_REQUIREMENT);
+                PrintingPressMenu.this.shrinkStackInSlot(BOOK_SLOT, BOOK_REQUIREMENT);
+                PrintingPressMenu.this.shrinkStackInSlot(MATERIAL_SLOT, MATERIAL_SLOT);
                 // TODO: Implement a custom sound?
                 super.onTake(player, itemStack);
             }
@@ -137,7 +148,10 @@ public class PrintingPressMenu extends AbstractContainerMenu {
         ItemStack material = this.inputSlots.getItem(MATERIAL_SLOT);
         ItemStack result = this.resultSlots.getItem(RESULT_SLOT);
 
-        if (!enchantedBook.isEmpty() && !book.isEmpty() && (material.getCount() >= 16)) {
+        if (enchantedBook.getCount() >= ENCHANTED_BOOK_REQUIREMENT
+                && book.getCount() >= BOOK_REQUIREMENT
+                && material.getCount() >= MATERIAL_REQUIREMENT
+        ) {
             this.setupResultSlot(enchantedBook);
         } else if (!result.isEmpty() ){
             this.resultSlots.removeItemNoUpdate(RESULT_SLOT);
@@ -154,13 +168,14 @@ public class PrintingPressMenu extends AbstractContainerMenu {
 
         // Get the total number of levels on the input enchanted book
         ItemEnchantments enchantments = EnchantmentHelper.getEnchantmentsForCrafting(enchantedBook);
-        int numEnchantmentLevels = 0;
+        int copyingCost = 0;
         for (Holder<Enchantment> enchantment : enchantments.keySet()) {
-            numEnchantmentLevels += enchantments.getLevel(enchantment);
+            copyingCost += enchantments.getLevel(enchantment);
         }
+        copyingCost = LEVEL_COST_COEFFICIENT * copyingCost + LEVEL_COST_OFFSET;
 
         ItemStack result = enchantedBook.copyWithCount(2);
-        this.cost.set(numEnchantmentLevels);
+        this.cost.set(copyingCost);
         this.resultSlots.setItem(RESULT_SLOT, result);
         this.broadcastChanges();
     }
