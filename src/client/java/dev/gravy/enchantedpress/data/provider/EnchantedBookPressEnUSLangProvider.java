@@ -11,6 +11,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -28,7 +29,7 @@ public class EnchantedBookPressEnUSLangProvider extends FabricLanguageProvider {
     }
 
     @Override
-    public void generateTranslations(HolderLookup.Provider provider, TranslationBuilder translationBuilder) {
+    public void generateTranslations(HolderLookup.@NonNull Provider provider, @NonNull TranslationBuilder translationBuilder) {
         translationBuilder.add(ModBlocks.PRINTING_PRESS, "Copying Table");
         translationBuilder.add(ModStats.INTERACT_WITH_PRINTING_PRESS, "Interact with Copying Table");
         addText(translationBuilder, PrintingPressBlock.CONTAINER_TITLE, "Copy Enchanted Book");

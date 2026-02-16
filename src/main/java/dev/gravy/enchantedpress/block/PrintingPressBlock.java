@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 public class PrintingPressBlock extends Block {
@@ -22,7 +23,7 @@ public class PrintingPressBlock extends Block {
     public static final Component CONTAINER_TITLE = Component.translatable("container." + EnchantedBookPress.MOD_ID + ".printing_press");
 
     @Override
-    public MapCodec<PrintingPressBlock> codec() {
+    public @NonNull MapCodec<PrintingPressBlock> codec() {
         return CODEC;
     }
 
@@ -31,7 +32,7 @@ public class PrintingPressBlock extends Block {
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState blockState, Level level, BlockPos blockPos, Player player, BlockHitResult blockHitResult) {
+    protected @NonNull InteractionResult useWithoutItem(@NonNull BlockState blockState, Level level, @NonNull BlockPos blockPos, @NonNull Player player, @NonNull BlockHitResult blockHitResult) {
         if (!level.isClientSide()) {
             player.openMenu(blockState.getMenuProvider(level, blockPos));
             player.awardStat(ModStats.INTERACT_WITH_PRINTING_PRESS);
@@ -42,7 +43,7 @@ public class PrintingPressBlock extends Block {
 
     @Nullable
     @Override
-    protected MenuProvider getMenuProvider(BlockState blockState, Level level, BlockPos blockPos) {
+    protected MenuProvider getMenuProvider(@NonNull BlockState blockState, @NonNull Level level, @NonNull BlockPos blockPos) {
         return new SimpleMenuProvider((syncId, inventory, player) -> new PrintingPressMenu(
                 syncId,
                 inventory
