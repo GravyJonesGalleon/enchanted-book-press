@@ -13,3 +13,5 @@ To copy an enchanted book, you'll need:
 
 ## Requirements/Dependencies
 Mod needs to be installed on the server and on all connected clients, and depends on any version of the Fabric API.
+This repository is now hosted on GitLab!
+
