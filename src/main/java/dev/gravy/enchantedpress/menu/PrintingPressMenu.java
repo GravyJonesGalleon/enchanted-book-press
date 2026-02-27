@@ -37,9 +37,9 @@ public class PrintingPressMenu extends AbstractContainerMenu {
     */
     public static final int ENCHANTED_BOOK_REQUIREMENT = 1; // Non-stackable
     public static final int BOOK_REQUIREMENT = 1;
-    public static final int MATERIAL_REQUIREMENT = 16;
-    public static final int LEVEL_COST_COEFFICIENT = 2;
-    public static final int LEVEL_COST_OFFSET = 2;
+    public static final int MATERIAL_REQUIREMENT = 64;
+    public static final double LEVEL_COST_COEFFICIENT = 1;
+    public static final double LEVEL_COST_OFFSET = 2.0;
 
     private final ContainerLevelAccess access;
     long lastSoundTime;
@@ -168,11 +168,11 @@ public class PrintingPressMenu extends AbstractContainerMenu {
 
         // Get the total number of levels on the input enchanted book
         ItemEnchantments enchantments = EnchantmentHelper.getEnchantmentsForCrafting(enchantedBook);
-        int copyingCost = 0;
+        int numLevels = 0;
         for (Holder<Enchantment> enchantment : enchantments.keySet()) {
-            copyingCost += enchantments.getLevel(enchantment);
+            numLevels += enchantments.getLevel(enchantment);
         }
-        copyingCost = LEVEL_COST_COEFFICIENT * copyingCost + LEVEL_COST_OFFSET;
+        int copyingCost = calculateXpCost(numLevels);
 
         ItemStack result = enchantedBook.copyWithCount(2);
         this.cost.set(copyingCost);
@@ -244,12 +244,15 @@ public class PrintingPressMenu extends AbstractContainerMenu {
         return stackToRemain;
     }
 
-
     @Override
     public void removed(@NonNull Player player) {
         super.removed(player);
         this.resultSlots.removeItemNoUpdate(RESULT_SLOT);
         this.clearContainer(player, this.inputSlots);
+    }
+
+    public int calculateXpCost(int numLevels) {
+        return (int) Math.ceil(LEVEL_COST_COEFFICIENT * numLevels + LEVEL_COST_OFFSET);
     }
 
     public int getCost() {

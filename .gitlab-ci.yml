@@ -1,0 +1,15 @@
+image: gradle:alpine
+
+stages:
+  - build
+
+cache:
+  key: "$CI_COMMIT_REF_SLUG"
+  paths:
+    - .gradle/caches
+    - .gradle/wrapper
+
+build-gradle:
+  stage: build
+  script:
+    - gradle build
