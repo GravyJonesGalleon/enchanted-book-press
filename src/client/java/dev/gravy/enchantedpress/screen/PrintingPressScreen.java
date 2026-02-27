@@ -37,22 +37,26 @@ public class PrintingPressScreen extends AbstractContainerScreen<PrintingPressMe
     @Override
     protected void renderLabels(@NonNull GuiGraphics guiGraphics, int mouseX, int mouseY) {
         super.renderLabels(guiGraphics, mouseX, mouseY);
-        int cost = this.menu.getCost();
-        Component costLabelText;
+        int xpCost = this.menu.getCost();
+        Component xpCostLabelText;
         if (!this.menu.getSlot(PrintingPressMenu.RESULT_SLOT).hasItem()) {
-            costLabelText = null;
+            xpCostLabelText = null;
         } else {
-            costLabelText = Component.translatable(COST_LABEL_TEXT.getString(), new Object[]{cost});
+            xpCostLabelText = Component.translatable(COST_LABEL_TEXT.getString(), xpCost);
         }
 
-        int costLabelTextColor = this.menu.getSlot(PrintingPressMenu.RESULT_SLOT).mayPickup(this.player)?
+        int xpCostLabelTextColor = this.menu.getSlot(PrintingPressMenu.RESULT_SLOT).mayPickup(this.player)?
                 CommonColors.GREEN : CommonColors.RED;
-        if (costLabelText != null) {
-            int xPos = this.imageWidth - 8 - this.font.width(costLabelText) - 2;
+        if (xpCostLabelText != null) {
+            int xPos = this.imageWidth - 8 - this.font.width(xpCostLabelText) - 2;
             int yPos = 69;
             guiGraphics.fill(xPos - 2, yPos - 2, this.imageWidth - 8, yPos + 10, CommonColors.GRAY);
-            guiGraphics.drawString(this.font, costLabelText, xPos, 69, costLabelTextColor);
+            guiGraphics.drawString(this.font, xpCostLabelText, xPos, yPos, xpCostLabelTextColor);
         }
+
+        // Draw the material cost, done like this to allow single source of truth for material cost value
+        Component materialCostText = Component.literal(String.format("x%d", PrintingPressMenu.MATERIAL_REQUIREMENT));
+        guiGraphics.drawString(this.font, materialCostText, 33, 59, CommonColors.GRAY, false);
     }
 
 
