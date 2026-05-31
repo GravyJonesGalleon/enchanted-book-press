@@ -1,7 +1,7 @@
-image: gradle:alpine
-
 stages:
+  - prebuild
   - build
+  - publish
 
 cache:
   key: "$CI_COMMIT_REF_SLUG"
@@ -9,7 +9,66 @@ cache:
     - .gradle/caches
     - .gradle/wrapper
 
+.get-mod-version:
+  script:
+    - |
+      export MOD_VERSION_PROPERTY="mod_version"
+      export MINECRAFT_VERSION_PROPERTY="minecraft_version"
+      export GRADLE_PROPERTIES_PATH="gradle.properties" 
+      export MOD_VERSION=$(grep "$MOD_VERSION_PROPERTY" "$GRADLE_PROPERTIES_PATH" | cut -d "=" -f2)
+      export MINECRAFT_VERSION=$(grep "$MINECRAFT_VERSION_PROPERTY" "$GRADLE_PROPERTIES_PATH" | cut -d "=" -f2)
+      echo "$MOD_VERSION_PROPERTY identified in $GRADLE_PROPERTIES_PATH as $MOD_VERSION for $MINECRAFT_VERSION_PROPERTY $MINECRAFT_VERSION"
+
+check-valid-semver:
+  stage: prebuild
+  image: alpine
+  before_script:
+    - apk add bash
+  script:
+    - !reference [.get-mod-version, script]
+    - ./.ci/check-valid-semver
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: on_success
+    - when: never
+
+
 build-gradle:
   stage: build
+  image: gradle:alpine
+  rules:
+    - if: $CI_COMMIT_TAG
   script:
+    - !reference [.get-mod-version, script]
     - gradle build
+  artifacts:
+    paths:
+      - build/libs/enchanted-book-press-*.jar
+
+release-on-gitlab:
+  stage: publish
+  # This is more up-to-date, gitlab cli is deprecated?
+  image: gitlab/glab:latest
+  rules:
+    - if: $CI_COMMIT_TAG
+  script:
+    - !reference [ .get-mod-version, script ]
+    - ls -la build/libs
+    - glab auth login -t "$CI_PAT" --hostname gitlab.com
+    - glab release create "$CI_COMMIT_TAG" -R "$CI_PROJECT_PATH" -N "$CI_COMMIT_TAG_MESSAGE" build/libs/enchanted-book-press-${MOD_VERSION}.jar
+    - echo "See if the glab CLI can use the release upload API yet"
+# As far as I can tell, `glab release upload` uses a different API, that the job access token can't use.
+# The temporary solution is to tie this to my personal access token, which I'm not too please about but
+# here we are
+# TODO: See if this has changed yet
+
+release-on-modrinth:
+  stage: publish
+  image: alpine
+  rules:
+    - if: $CI_COMMIT_TAG
+  script:
+    - !reference [ .get-mod-version, script ]
+    - apk add bash curl
+    - ./.ci/publish-to-modrinth
+
