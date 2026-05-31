@@ -1,0 +1,17 @@
+#! /usr/bin/env bash
+
+if [ -z "$MODRINTH_VERSIONS_TOKEN" ]; then
+  echo "ERR: Modrinth Personal Access Token not set"
+  exit 1
+fi
+
+if [ -z "$MOD_VERSION" ]; then
+  echo "ERR: Mod version not set"
+  exit 2
+fi
+
+VERSION_TYPE=release
+
+curl -v -X POST -H "Authorization: ${MODRINTH_VERSIONS_TOKEN}" "https://api.modrinth.com/v2/version" \
+	-F data="{\"name\":\"Version ${MOD_VERSION}\", \"version_number\":\"${MOD_VERSION}\",\"dependencies\":[], \"game_versions\":[\"${MINECRAFT_VERSION}\"], \"version_type\":\"${VERSION_TYPE}\", \"loaders\":[\"fabric\"], \"featured\":true, \"status\":\"listed\", \"project_id\":\"3Yfib80e\", \"file_parts\":[\"enchanted-book-press-${MOD_VERSION}.jar\"]}" \
+	-F file="@build/libs/enchanted-book-press-${MOD_VERSION}.jar"
