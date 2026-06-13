@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "minecraft:block/spruce_planks",
+    "west": "copying-table:block/copying_table_side2",
+    "south": "copying-table:block/copying_table_side4",
+    "particle": "minecraft:block/spruce_planks",
+    "north": "copying-table:block/copying_table_side1",
+    "up": "copying-table:block/copying_table_top",
+    "east": "copying-table:block/copying_table_side3"
+  }
+}

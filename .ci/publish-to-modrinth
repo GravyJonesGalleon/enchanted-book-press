@@ -13,5 +13,5 @@ fi
 VERSION_TYPE=release
 
 curl -v -X POST -H "Authorization: ${MODRINTH_VERSIONS_TOKEN}" "https://api.modrinth.com/v2/version" \
-	-F data="{\"name\":\"Version ${MOD_VERSION}\", \"version_number\":\"${MOD_VERSION}\",\"dependencies\":[], \"game_versions\":[\"${MINECRAFT_VERSION}\"], \"version_type\":\"${VERSION_TYPE}\", \"loaders\":[\"fabric\"], \"featured\":true, \"status\":\"listed\", \"project_id\":\"3Yfib80e\", \"file_parts\":[\"enchanted-book-press-${MOD_VERSION}.jar\"]}" \
-	-F file="@build/libs/enchanted-book-press-${MOD_VERSION}.jar"
+	-F data="{\"name\":\"Version ${MOD_VERSION}\", \"version_number\":\"${MOD_VERSION}\",\"dependencies\":[], \"game_versions\":[\"${MINECRAFT_VERSION}\"], \"version_type\":\"${VERSION_TYPE}\", \"loaders\":[\"fabric\"], \"featured\":true, \"status\":\"listed\", \"project_id\":\"3Yfib80e\", \"file_parts\":[\"copying-table-${MOD_VERSION}.jar\"]}" \
+	-F file="@build/libs/copying-table-${MOD_VERSION}.jar"
