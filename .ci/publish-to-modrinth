@@ -13,17 +13,17 @@ fi
 VERSION_TYPE=release
 
 POST_BODY_JSON=$(jq -n \
-  --arg name              "Version: ${MOD_VERSION}" \
-  --arg version_number    "${MOD_VERSION}" \
-  --arg changelog         "${CI_COMMIT_TAG_MESSAGE}" \
-  --arg dependencies      [] \
-  --arg game_versions     ["${MINECRAFT_VERSION}"] \
-  --arg version_type      "${VERSION_TYPE}" \
-  --arg loaders           ["fabric"] \
-  --arg featured          true \
-  --arg status            "listed" \
-  --arg project_id        "3Yfib80e" \
-  --arg file_parts        ["copying-table-${MOD_VERSION}.jar"] \
+  --argjson name              "Version: ${MOD_VERSION}" \
+  --argjson version_number    "${MOD_VERSION}" \
+  --argjson changelog         "${CI_COMMIT_TAG_MESSAGE}" \
+  --argjson dependencies      [] \
+  --argjson game_versions     ["${MINECRAFT_VERSION}"] \
+  --argjson version_type      "${VERSION_TYPE}" \
+  --argjson loaders           ["fabric"] \
+  --argjson featured          true \
+  --argjson status            "listed" \
+  --argjson project_id        "3Yfib80e" \
+  --argjson file_parts        ["copying-table-${MOD_VERSION}.jar"] \
   '$ARGS.named'
 )
 
