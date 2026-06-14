@@ -1,0 +1,6 @@
+{
+  "block.copying-table.copying_table": "Copying Table",
+  "container.copying-table.copying_table": "Copy Enchanted Book",
+  "container.copying-table.copying_table.cost_label_text": "Copying Cost: %1$s",
+  "copying-table.interact_with_copying_table": "Interact with Copying Table"
+}

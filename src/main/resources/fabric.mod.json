@@ -1,33 +1,33 @@
 {
 	"schemaVersion": 1,
-	"id": "enchanted-book-press",
+	"id": "copying-table",
 	"version": "${version}",
-	"name": "Enchanted Book Press",
+	"name": "Copying Table",
 	"description": "Adds a Copying Table for cloning enchanted books!",
 	"authors": [
-		"https://github.com/GravyJonesGalleon"
+		"GravyJones"
 	],
 	"contact": {
-		"sources": "https://github.com/GravyJonesGalleon/enchanted-book-press"
+		"sources": "https://gitlab.com/gravy-public/copying-table"
 	},
-	"license": "CC0-1.0",
-	"icon": "assets/enchanted-book-press/textures/block/printing_press_top.png",
+	"license": "CC-BY-NC-4.0",
+	"icon": "assets/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"dev.gravy.enchantedpress.EnchantedBookPress"
+			"dev.gravy.copyingtable.CopyingTableInitializer"
 		],
 		"client": [
-			"dev.gravy.enchantedpress.EnchantedBookPressClient"
+			"dev.gravy.copyingtable.CopyingTableClient"
 		],
 		"fabric-datagen": [
-			"dev.gravy.enchantedpress.EnchantedBookPressDataGenerator"
+			"dev.gravy.copyingtable.CopyingTableDataGenerator"
 		]
 	},
 	"mixins": [
-		"enchanted-book-press.mixins.json",
+		"copying-table.mixins.json",
 		{
-			"config": "enchanted-book-press.client.mixins.json",
+			"config": "copying-table.client.mixins.json",
 			"environment": "client"
 		}
 	],
