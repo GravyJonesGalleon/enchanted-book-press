@@ -27,6 +27,12 @@ POST_BODY_JSON=$(jq -n \
   '$ARGS.named'
 )
 
+# Doing it this way because of subshell-isms
+if [ $? != 0 ]; then
+  echo "ERR: jq failed to parse JSON"
+  exit 3
+fi
+
 echo "$POST_BODY_JSON"
 
 curl -v -X POST -H "Authorization: ${MODRINTH_VERSIONS_TOKEN}" "https://api.modrinth.com/v2/version" \
